@@ -26,37 +26,53 @@
 <!-- Container for displaying prompts and images -->
 <div id="galleryContainer"></div>
 
-<?php
-// Read prompts from the file
-$prompts = file("./prompt.txt", FILE_IGNORE_NEW_LINES);
+<script>
+// Fetch prompts from the file
+fetch('./prompt.txt')
+    .then(response => response.text())
+    .then(prompts => {
+        // Split the prompts into an array
+        const promptsArray = prompts.split('\n').filter(Boolean);
 
-// Loop through each prompt
-for ($i = 0; $i < count($prompts); $i++) {
-    $prompt = $prompts[$i];
-?>
-    <div class="promptContainer">
-        <!-- Display the prompt -->
-        <p class="prompt">Prompt <?php echo $i + 1; ?>: <?php echo $prompt; ?></p>
+        // Container for displaying prompts and images
+        const galleryContainer = document.getElementById('galleryContainer');
 
-        <!-- Image containers for LCM, PixArt, Turbol -->
-        <div class="imageContainer" id="imageLCM_<?php echo $i + 1; ?>">
-            <p>LCM_4_<?php echo $i + 1; ?></p>
-            <img src="./output/LCM_4_<?php echo $i + 1; ?>.png" alt="LCM_4_<?php echo $i + 1; ?>">
-        </div>
+        // Loop through each prompt
+        for (let i = 0; i < promptsArray.length; i++) {
+            const prompt = promptsArray[i];
 
-        <div class="imageContainer" id="imagePixArt_<?php echo $i + 1; ?>">
-            <p>PixArt_4_<?php echo $i + 1; ?></p>
-            <img src="./output/PixArt_4_<?php echo $i + 1; ?>.png" alt="PixArt_4_<?php echo $i + 1; ?>">
-        </div>
+            // Create a prompt container
+            const promptContainer = document.createElement('div');
+            promptContainer.className = 'promptContainer';
 
-        <div class="imageContainer" id="imageTurbol_<?php echo $i + 1; ?>">
-            <p>Turbol_4_<?php echo $i + 1; ?></p>
-            <img src="./output/Turbol_4_<?php echo $i + 1; ?>.png" alt="Turbol_4_<?php echo $i + 1; ?>">
-        </div>
-    </div>
-<?php
-}
-?>
+            // Display the prompt
+            const promptElement = document.createElement('p');
+            promptElement.className = 'prompt';
+            promptElement.textContent = `Prompt ${i + 1}: ${prompt}`;
+            promptContainer.appendChild(promptElement);
+
+            // Image containers for LCM, PixArt, Turbol
+            const imageContainerLCM = document.createElement('div');
+            imageContainerLCM.className = 'imageContainer';
+            imageContainerLCM.innerHTML = `<p>LCM_4_${i + 1}</p><img src="./output/LCM_4_${i + 1}.png" alt="LCM_4_${i + 1}">`;
+            promptContainer.appendChild(imageContainerLCM);
+
+            const imageContainerPixArt = document.createElement('div');
+            imageContainerPixArt.className = 'imageContainer';
+            imageContainerPixArt.innerHTML = `<p>PixArt_4_${i + 1}</p><img src="./output/PixArt_4_${i + 1}.png" alt="PixArt_4_${i + 1}">`;
+            promptContainer.appendChild(imageContainerPixArt);
+
+            const imageContainerTurbol = document.createElement('div');
+            imageContainerTurbol.className = 'imageContainer';
+            imageContainerTurbol.innerHTML = `<p>Turbol_4_${i + 1}</p><img src="./output/Turbol_4_${i + 1}.png" alt="Turbol_4_${i + 1}">`;
+            promptContainer.appendChild(imageContainerTurbol);
+
+            // Append the prompt container to the gallery container
+            galleryContainer.appendChild(promptContainer);
+        }
+    })
+    .catch(error => console.error('Error fetching prompts:', error));
+</script>
 
 </body>
 </html>
