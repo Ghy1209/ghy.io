@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        img {
+            max-width: 300px;
+            height: auto;
+            margin: 5px;
+        }
+        .promptContainer {
+            margin-bottom: 20px;
+        }
+        .imageContainer {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Image Gallery</h1>
+
+<!-- Container for displaying prompts and images -->
+<div id="galleryContainer"></div>
+
+<?php
+// Read prompts from the file
+$prompts = file("./prompt.txt", FILE_IGNORE_NEW_LINES);
+
+// Loop through each prompt
+for ($i = 0; $i < count($prompts); $i++) {
+    $prompt = $prompts[$i];
+?>
+    <div class="promptContainer">
+        <!-- Display the prompt -->
+        <p class="prompt">Prompt <?php echo $i + 1; ?>: <?php echo $prompt; ?></p>
+
+        <!-- Image containers for LCM, PixArt, Turbol -->
+        <div class="imageContainer" id="imageLCM_<?php echo $i + 1; ?>">
+            <p>LCM_4_<?php echo $i + 1; ?></p>
+            <img src="./output/LCM_4_<?php echo $i + 1; ?>.png" alt="LCM_4_<?php echo $i + 1; ?>">
+        </div>
+
+        <div class="imageContainer" id="imagePixArt_<?php echo $i + 1; ?>">
+            <p>PixArt_4_<?php echo $i + 1; ?></p>
+            <img src="./output/PixArt_4_<?php echo $i + 1; ?>.png" alt="PixArt_4_<?php echo $i + 1; ?>">
+        </div>
+
+        <div class="imageContainer" id="imageTurbol_<?php echo $i + 1; ?>">
+            <p>Turbol_4_<?php echo $i + 1; ?></p>
+            <img src="./output/Turbol_4_<?php echo $i + 1; ?>.png" alt="Turbol_4_<?php echo $i + 1; ?>">
+        </div>
+    </div>
+<?php
+}
+?>
+
+</body>
+</html>
