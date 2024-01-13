@@ -51,21 +51,15 @@ fetch('./prompt.txt')
             promptElement.textContent = `Prompt ${i + 1}: ${prompt}`;
             promptContainer.appendChild(promptElement);
 
-            // Image containers for LCM, PixArt, Turbol
-            const imageContainerLCM = document.createElement('div');
-            imageContainerLCM.className = 'imageContainer';
-            imageContainerLCM.innerHTML = `<p>LCM_4_${i + 1}</p><img src="./output/LCM_4_${i + 1}.png" alt="LCM_4_${i + 1}">`;
-            promptContainer.appendChild(imageContainerLCM);
-
-            const imageContainerPixArt = document.createElement('div');
-            imageContainerPixArt.className = 'imageContainer';
-            imageContainerPixArt.innerHTML = `<p>PixArt_4_${i + 1}</p><img src="./output/PixArt_4_${i + 1}.png" alt="PixArt_4_${i + 1}">`;
-            promptContainer.appendChild(imageContainerPixArt);
-
-            const imageContainerTurbol = document.createElement('div');
-            imageContainerTurbol.className = 'imageContainer';
-            imageContainerTurbol.innerHTML = `<p>Turbol_4_${i + 1}</p><img src="./output/Turbol_4_${i + 1}.png" alt="Turbol_4_${i + 1}">`;
-            promptContainer.appendChild(imageContainerTurbol);
+            // Image containers for LCM, PixArt, Turbo
+            const methods = ['LCM', 'PixArt', 'Turbo'];
+            for (let j = 1; j <= 3; j++) {
+                const imageContainer = document.createElement('div');
+                imageContainer.className = 'imageContainer';
+                const imageName = `${methods[j - 1]}_4_${i + 1}.png`;
+                imageContainer.innerHTML = `<p>${imageName}</p><img src="./output/${imageName}" alt="${imageName}">`;
+                promptContainer.appendChild(imageContainer);
+            }
 
             // Append the prompt container to the gallery container
             galleryContainer.appendChild(promptContainer);
